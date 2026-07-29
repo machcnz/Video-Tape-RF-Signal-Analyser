@@ -17,7 +17,8 @@ Compares two VHS RF capture files and measures signal.
 - PNG spectrum plot auto-saved alongside input file
 
 ## Example Output
-Example of a CX-Card 40 MSPS 8-bit capture and after 2× decimation.
+Example of a hsdaoh 40 MSPS 16-bit capture before and after
+swapping out AD8138 with LT6600-10 opamp w/integrated Chebyshev Low Pass Filter.
 
 ![Main Spectrum Plot](assets/example-spectrum-main.png)
 ![Luma Spectrum Plot](assets/example-spectrum-luma.png)
