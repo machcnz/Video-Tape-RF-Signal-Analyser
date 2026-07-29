@@ -1,4 +1,4 @@
-# VHS-RF-Signal-Analyser
+# Video-Tape-RF-Signal-Analyser
 Compares two VHS RF capture files and measures signal. 
 ![GUI Screenshot](assets/gui-screenshot.png)
 
