@@ -765,25 +765,20 @@ class SignalCompareGUI:
         add_band_overlays(ax1)
         add_peak_markers(ax1)
         add_luma_reference_lines(ax1)
-        # Floor lines bounded: from chroma low guard start to luma high guard end
-        chroma_guard_low = bands.get('chroma_noise_low', [225_000, 400_000])
+        # Floor lines: angled from chroma floor to luma floor showing tilt
+        chroma_guard_high = bands.get('chroma_noise_high', [950_000, 1_300_000])
         luma_guard_high = bands.get('luma_noise_high', [6_000_000, 7_000_000])
-        floor_x_start = chroma_guard_low[0] / 1e6
-        floor_x_end = luma_guard_high[1] / 1e6
-        for floor_data, color, label_pfx in [
-            (luma_floor, '#1565C0', 'Luma floor orig'),
-            (chroma_floor, '#1565C0', 'Chroma floor orig'),
-        ]:
-            val = floor_data.get('orig')
-            if val is not None and isinstance(val, (int, float)):
-                ax1.plot([floor_x_start, floor_x_end], [val, val], color=color, linestyle=':', linewidth=1.0, alpha=0.7, label=label_pfx)
-        for floor_data, color, label_pfx in [
-            (luma_floor, '#E64A19', 'Luma floor cmp'),
-            (chroma_floor, '#E64A19', 'Chroma floor cmp'),
-        ]:
-            val = floor_data.get('deci')
-            if val is not None and isinstance(val, (int, float)):
-                ax1.plot([floor_x_start, floor_x_end], [val, val], color=color, linestyle=':', linewidth=1.0, alpha=0.7, label=label_pfx)
+        # X positions: midpoint of chroma high guard, midpoint of luma high guard
+        chroma_x = (chroma_guard_high[0] + chroma_guard_high[1]) / 2e6
+        luma_x = (luma_guard_high[0] + luma_guard_high[1]) / 2e6
+        chroma_orig = chroma_floor.get('orig')
+        luma_orig = luma_floor.get('orig')
+        chroma_deci = chroma_floor.get('deci')
+        luma_deci = luma_floor.get('deci')
+        if chroma_orig is not None and luma_orig is not None:
+            ax1.plot([chroma_x, luma_x], [chroma_orig, luma_orig], color='#1565C0', linestyle=':', linewidth=1.2, alpha=0.7, label='Noise floor orig')
+        if chroma_deci is not None and luma_deci is not None:
+            ax1.plot([chroma_x, luma_x], [chroma_deci, luma_deci], color='#E64A19', linestyle=':', linewidth=1.2, alpha=0.7, label='Noise floor cmp')
         ax1.set_title('Full Spectrum')
         ax1.set_xlabel('Frequency (MHz)')
         ax1.set_ylabel('Magnitude (dB)')
