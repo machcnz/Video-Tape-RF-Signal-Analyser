@@ -17,16 +17,12 @@ Compares two VHS RF capture files and measures signal.
 - PNG spectrum plot auto-saved alongside input file
 
 ## Example Output
-<details>
-<summary>Example Output</summary>
-
-Example of a CX Card 40 MSPS 8-bit capture after 2× decimation, showing improved signal-to-noise ratio.
+Example of a CX-Card 40 MSPS 8-bit capture and after 2× decimation.
 
 ![Main Spectrum Plot](assets/example-spectrum-main.png)
 ![Luma Spectrum Plot](assets/example-spectrum-luma.png)
 ![Chroma Spectrum Plot](assets/example-spectrum-chroma.png)
 
-</details>
 
 ## Why use this and what can this tool help with?
 - Is your RF capture achieving the best possible signal-to-noise ratio?
