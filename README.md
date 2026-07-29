@@ -16,11 +16,18 @@ Compares two VHS RF capture files and measures signal.
 - Baseline profile the VCR, Capture device and signal path
 - PNG spectrum plot auto-saved alongside input file
 
-- ## Example Output
-Example lists a CXCard 40msps 8bit capture decimated, improving Signal-to-noise
+## Example Output
+<details>
+<summary>Example Output</summary>
+
+Example of a CX Card 40 MSPS 8-bit capture after 2× decimation, showing improved signal-to-noise ratio.
+
 ![Main Spectrum Plot](assets/example-spectrum-main.png)
 ![Luma Spectrum Plot](assets/example-spectrum-luma.png)
-![Chroma Spectrum Plot](assets/example-spectrum-luma.png)
+![Chroma Spectrum Plot](assets/example-spectrum-chroma.png)
+
+</details>
+
 ## Why use this and what can this tool help with?
 - Is your RF capture achieving the best possible signal-to-noise ratio?
 - How does your capture setup compare against anothers?
