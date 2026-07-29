@@ -1,0 +1,32 @@
+[package]
+name = "VHS_RF_Signal_Analyser"
+version = "6.57.0"
+edition = "2024"
+description = "VHS RF capture comparison and analysis tool"
+
+[dependencies]
+rayon = "1"
+symphonia = { version = "0.5", features = ["flac"] }
+rustfft = "6"
+eframe = { version = "0.31", optional = true }
+rfd = { version = "0.15", optional = true }
+serde = { version = "1", features = ["derive"], optional = true }
+serde_json = { version = "1", optional = true }
+dirs = { version = "6", optional = true }
+
+[features]
+gui = ["eframe", "rfd", "serde", "serde_json", "dirs"]
+
+[[bin]]
+name = "compare-rf"
+path = "src/bin/compare-rf.rs"
+
+[[bin]]
+name = "compare_gui"
+path = "src/bin/compare_gui.rs"
+required-features = ["gui"]
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
