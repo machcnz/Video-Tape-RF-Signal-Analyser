@@ -17,7 +17,7 @@ Compares two VHS RF capture files and measures signal.
 - PNG spectrum plot auto-saved alongside input file
 
 - ## Example Output
-
+Example lists a CXCard 40msps 8bit capture decimated, improving Signal-to-noise
 ![Main Spectrum Plot](assets/example-spectrum-main.png)
 ![Luma Spectrum Plot](assets/example-spectrum-luma.png)
 ![Chroma Spectrum Plot](assets/example-spectrum-luma.png)
