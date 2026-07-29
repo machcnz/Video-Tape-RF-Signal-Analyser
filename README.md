@@ -6,9 +6,7 @@ Compares two VHS RF capture files and measures signal.
 - Works with raw or FLAC ADC captures at any sample rate.
 - Supports NTSC, PAL, M-PAL, N-PAL. Rust backend with Python/Tkinter GUI.
 
-## Why use this?
-You may want to know:
-## What can this tool help determine?
+## Why use this and what can this tool help determine?
 - Is your RF capture achieving the best possible signal-to-noise ratio?
 - How does your capture setup compare against another setup?
 - Is your capture device or VCR performing correctly?
