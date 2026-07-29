@@ -20,17 +20,17 @@ Compares two VHS RF capture files and measures signal.
 
 
 ## How To Build - Currently Windows
-# 1. Install Rust (nightly, GNU toolchain)
+### 1. Install Rust (nightly, GNU toolchain)
 winget install Rustlang.Rustup
 rustup default nightly-x86_64-pc-windows-gnu
 
-# 2. Install Python 3.14+ (if not present)
+### 2. Install Python 3.14+ (if not present)
 winget install Python.Python.3.14
 
-# 3. Install Python packages
+### 3. Install Python packages
 pip install matplotlib mutagen pyinstaller
 
-# 4. Build
+### 4. Build
 Set-Location C:\VHS_RF_Signal_Analyser
 cargo build --release --bin compare-rf
 python -m PyInstaller SignalCompareGUI.spec --distpath dist_v7-nn --noconfirm
@@ -38,7 +38,10 @@ Set-Location C:VHS_RF_Signal_Analyser
 cargo build --release --bin compare-rf
 python -m PyInstaller SignalCompareGUI.spec --distpath dist_v7-nn --noconfirm
 
-Output artifacts:
-
+**Output artifacts:**
 CLI exe: target\release\compare-rf.exe
-GUI exe: dist_v7-nn\SignalCompareGUI.exe
+GUI exe: dist_v6\SignalCompareGUI.exe
+
+## Usage:
+Launch the gui tool: dist_v6.xx\SignalCompareGUI.exe
+Or commandline tool: target\release\compare-rf.exe
