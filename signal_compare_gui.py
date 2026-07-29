@@ -696,10 +696,13 @@ class SignalCompareGUI:
                         continue
                     lbl = '_nolegend_' if key in exclude_keys else label
                     ax.plot([x], [y], marker=marker, markersize=7, color=color, linestyle='None', label=lbl)
+                    # Offset: orig labels up-right, cmp labels down-left to avoid overlap
+                    is_cmp = key.endswith('_deci')
+                    offset = (-60, -20) if is_cmp else (6, 6)
                     ax.annotate(
                         f"{x:.3f} MHz\n{mag:.2f} dB",
                         (x, y),
-                        xytext=(6, 6),
+                        xytext=offset,
                         textcoords='offset points',
                         fontsize=7,
                         color=color,
@@ -766,19 +769,29 @@ class SignalCompareGUI:
         add_peak_markers(ax1)
         add_luma_reference_lines(ax1)
         # Floor lines: angled from chroma floor to luma floor showing tilt
+        # Extend from start of first chroma guard to end of luma high guard
+        chroma_guard_low = bands.get('chroma_noise_low', [225_000, 400_000])
         chroma_guard_high = bands.get('chroma_noise_high', [950_000, 1_300_000])
         luma_guard_high = bands.get('luma_noise_high', [6_000_000, 7_000_000])
-        # X positions: midpoint of chroma high guard, midpoint of luma high guard
-        chroma_x = (chroma_guard_high[0] + chroma_guard_high[1]) / 2e6
-        luma_x = (luma_guard_high[0] + luma_guard_high[1]) / 2e6
+        floor_x_start = chroma_guard_low[0] / 1e6
+        chroma_x_mid = (chroma_guard_high[0] + chroma_guard_high[1]) / 2e6
+        floor_x_end = luma_guard_high[1] / 1e6
+        luma_x_mid = (luma_guard_high[0] + luma_guard_high[1]) / 2e6
         chroma_orig = chroma_floor.get('orig')
         luma_orig = luma_floor.get('orig')
         chroma_deci = chroma_floor.get('deci')
         luma_deci = luma_floor.get('deci')
         if chroma_orig is not None and luma_orig is not None:
-            ax1.plot([chroma_x, luma_x], [chroma_orig, luma_orig], color='#1565C0', linestyle=':', linewidth=1.2, alpha=0.7, label='Noise floor orig')
+            # Extrapolate the tilt line to cover full guard range
+            slope = (luma_orig - chroma_orig) / (luma_x_mid - chroma_x_mid) if luma_x_mid != chroma_x_mid else 0.0
+            y_start = chroma_orig + slope * (floor_x_start - chroma_x_mid)
+            y_end = chroma_orig + slope * (floor_x_end - chroma_x_mid)
+            ax1.plot([floor_x_start, floor_x_end], [y_start, y_end], color='#1565C0', linestyle=':', linewidth=1.2, alpha=0.7, label='Noise floor orig')
         if chroma_deci is not None and luma_deci is not None:
-            ax1.plot([chroma_x, luma_x], [chroma_deci, luma_deci], color='#E64A19', linestyle=':', linewidth=1.2, alpha=0.7, label='Noise floor cmp')
+            slope = (luma_deci - chroma_deci) / (luma_x_mid - chroma_x_mid) if luma_x_mid != chroma_x_mid else 0.0
+            y_start = chroma_deci + slope * (floor_x_start - chroma_x_mid)
+            y_end = chroma_deci + slope * (floor_x_end - chroma_x_mid)
+            ax1.plot([floor_x_start, floor_x_end], [y_start, y_end], color='#E64A19', linestyle=':', linewidth=1.2, alpha=0.7, label='Noise floor cmp')
         ax1.set_title('Full Spectrum')
         ax1.set_xlabel('Frequency (MHz)')
         ax1.set_ylabel('Magnitude (dB)')
